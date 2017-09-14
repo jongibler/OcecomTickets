@@ -26,6 +26,12 @@
                         <li>@Html.ActionLink("Clientes", "Index", "Clients")</li>                        
                     </ul>
                 }
+                @if (User.IsInRole("Client"))
+                {
+                    <ul class="nav navbar-nav">
+                        <li><a>Tickets</a></li>
+                    </ul>
+                }
                 
                 @Html.Partial("_LoginPartial")
             </div>

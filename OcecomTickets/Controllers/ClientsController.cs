@@ -7,12 +7,29 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using OcecomTickets.Models;
+using Microsoft.AspNet.Identity.Owin;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace OcecomTickets.Controllers
 {
     [Authorize(Roles ="Admin")]
     public class ClientsController : Controller
     {
+        ApplicationUserManager _userManager;
+        ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            set
+            {
+                _userManager = value;
+            }
+        }
+
         private OcecomTicketsContext db = new OcecomTicketsContext();
 
         // GET: Clients
@@ -56,12 +73,31 @@ namespace OcecomTickets.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Clients.Add(client);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (CreateUser(client.Email, client.Password))
+                {
+                    db.Clients.Add(client);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Error: No se pudo crear el usuario.");
+                }
             }
 
             return View(client);
+        }
+
+        private bool CreateUser(string email, string password)
+        {
+            var user = new ApplicationUser { UserName = email, Email = email };
+            var result = UserManager.CreateAsync(user, password);
+            if (result.Result.Succeeded)
+            {
+                UserManager.AddToRole(user.Id, "Client");                
+                return true;
+            }
+            return false;
         }
 
         private bool UserEmailExists(string email)
@@ -84,6 +120,8 @@ namespace OcecomTickets.Controllers
             {
                 return HttpNotFound();
             }
+
+            
             return View(client);
         }
 
@@ -92,12 +130,28 @@ namespace OcecomTickets.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email")] Client client)
+        public ActionResult Edit(Client client)
         {
+            const string dummyPassword = "JustToMakeItPassTheModelValidation";
+
+            if (String.IsNullOrWhiteSpace(client.Password))
+            {
+                ModelState["Password"].Errors.Clear();
+                client.Password = dummyPassword;
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(client).State = EntityState.Modified;
                 db.SaveChanges();
+
+                if (client.Password != dummyPassword)
+                {
+                    var user = UserManager.FindByName(client.Email);
+                    UserManager.RemovePassword(user.Id);
+                    UserManager.AddPassword(user.Id, client.Password);               
+                }
+
                 return RedirectToAction("Index");
             }
             return View(client);
