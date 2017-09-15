@@ -178,8 +178,10 @@ namespace OcecomTickets.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Client client = db.Clients.Find(id);
+            var user = UserManager.FindByName(client.Email);
+            UserManager.Delete(user);
             db.Clients.Remove(client);
-            db.SaveChanges();
+            db.SaveChanges();            
             return RedirectToAction("Index");
         }
 

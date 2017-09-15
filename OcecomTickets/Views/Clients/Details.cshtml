@@ -1,26 +1,39 @@
 ﻿@model OcecomTickets.Models.Client
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles Cliente";
 }
 
-<h2>Details</h2>
+<h2>Detalles Cliente</h2>
 
 <div>
-    <h4>Client</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+        
+        <dt>E-mail</dt>
+        <dd>@Html.DisplayFor(model => model.Email)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+        <dt>Nombre del Cliente</dt>
+        <dd>@Html.DisplayFor(model => model.ClientName)</dd>
+
+        <dt>Nombre del Contacto</dt>
+        <dd>@Html.DisplayFor(model => model.ContactName)</dd>
+
+        <dt>Teléfono de Oficina</dt>
+        <dd>@Html.DisplayFor(model => model.OfficePhone)</dd>
+
+        <dt>Teléfono Móvil</dt>
+        <dd>@Html.DisplayFor(model => model.MobilePhone)</dd>
+
+        <dt>Horas Mensuales</dt>
+        <dd>@Html.DisplayFor(model => model.MonthlyHours)</dd>
+
+        <dt>Notas</dt>
+        <dd>@Html.DisplayFor(model => model.Notes)</dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Regresar al listado", "Index")
 </p>
