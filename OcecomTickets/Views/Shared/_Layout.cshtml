@@ -23,13 +23,14 @@
                 @if (User.IsInRole("Admin"))
                 {
                     <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>
                         <li>@Html.ActionLink("Clientes", "Index", "Clients")</li>                        
                     </ul>
                 }
                 @if (User.IsInRole("Client"))
                 {
                     <ul class="nav navbar-nav">
-                        <li><a>Tickets</a></li>
+                        <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>
                     </ul>
                 }
                 

@@ -10,10 +10,9 @@ namespace OcecomTickets.Controllers
     {
         public ActionResult Index()
         {
-
-            if (User.IsInRole("Admin"))
+            if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Clients");
+                return RedirectToAction("Index", "Tickets");
             }
 
             return RedirectToAction("Login", "Account");

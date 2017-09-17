@@ -20,7 +20,8 @@ namespace OcecomTickets.Models
         }
 
         public System.Data.Entity.DbSet<OcecomTickets.Models.Client> Clients { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
 
-        
+
     }
 }
