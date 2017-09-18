@@ -17,17 +17,68 @@ namespace OcecomTickets.Controllers
         private OcecomTicketsContext db = new OcecomTicketsContext();
 
         // GET: Tickets
-        public ActionResult Index()
+        public ActionResult Index(string sortBy, string currentTab)
+        {
+            var validTabs = new string[] { "open", "inprogress", "closed" };
+            ViewBag.CurrentTab = validTabs.Contains(currentTab) ? currentTab : "open";
+
+            var ticketsQuery = db.Tickets.AsQueryable();
+            ticketsQuery = FilterForClient(ticketsQuery);
+            ticketsQuery = ApplySorting(sortBy, ticketsQuery);
+
+            return View(ticketsQuery.ToList()); 
+        }
+
+        private IQueryable<Ticket> ApplySorting(string sortBy, IQueryable<Ticket> ticketsQuery)
+        {
+            ViewBag.ClientSort = sortBy == "client" ? "clientDesc" : "client";
+            ViewBag.DateSort = sortBy == "date" ? "dateDesc" : "date";
+            ViewBag.SeveritySort = sortBy == "severity" ? "severityDesc" : "severity";
+            ViewBag.CategorySort = sortBy == "category" ? "categoryDesc" : "category";
+
+            switch (sortBy)
+            {
+                case "client":
+                    ticketsQuery = ticketsQuery.OrderBy(t => t.Client.ClientName);
+                    break;
+                case "clientDesc":
+                    ticketsQuery = ticketsQuery.OrderByDescending(t => t.Client.ClientName);
+                    break;
+                case "date":
+                    ticketsQuery = ticketsQuery.OrderBy(t => t.CreationDate);
+                    break;
+                case "dateDesc":
+                    ticketsQuery = ticketsQuery.OrderByDescending(t => t.CreationDate);
+                    break;
+                case "severity":
+                    ticketsQuery = ticketsQuery.OrderBy(t => t.Severity);
+                    break;
+                case "severityDesc":
+                    ticketsQuery = ticketsQuery.OrderByDescending(t => t.Severity);
+                    break;
+                case "category":
+                    ticketsQuery = ticketsQuery.OrderBy(t => t.Category);
+                    break;
+                case "categoryDesc":
+                    ticketsQuery = ticketsQuery.OrderByDescending(t => t.Category);
+                    break;
+                default:
+                    ticketsQuery.OrderBy(t => t.CreationDate);
+                    break;
+            }
+
+            return ticketsQuery;
+        }
+
+        private IQueryable<Ticket> FilterForClient(IQueryable<Ticket> ticketsQuery)
         {
             if (User.IsInRole("Client"))
             {
                 var clientId = db.Clients.Where(c => c.Email == User.Identity.Name).Select(c => c.Id).First();
-                return View(db.Tickets.Where(t => t.ClientId == clientId).ToList());
+                ticketsQuery = ticketsQuery.Where(t => t.ClientId == clientId);
             }
-            else
-            {
-                return View(db.Tickets.ToList());
-            }
+
+            return ticketsQuery;
         }
 
         // GET: Tickets/Details/5
@@ -63,6 +114,8 @@ namespace OcecomTickets.Controllers
             ticket.CreationDate = DateTime.Now;
             ticket.Status = "Abierto";
             ticket.ClientId = db.Clients.Where(c => c.Email == User.Identity.Name).Select(c => c.Id).First();
+
+            ModelState["Status"].Errors.Clear();
 
             if (ModelState.IsValid)
             {

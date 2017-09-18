@@ -15,10 +15,11 @@ namespace OcecomTickets.Models
         public string Status { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:dd MMM. h:mm tt}")]
         public DateTime CreationDate { get; set; }
 
         [Required(ErrorMessage = "Requerido")]
-        public string Severity { get; set; }
+        public int Severity { get; set; }
 
         [Required(ErrorMessage = "Requerido")]
         public string Category { get; set; }
@@ -30,5 +31,24 @@ namespace OcecomTickets.Models
 
         public int ClientId { get; set; }
         public virtual Client Client { get; set; }
+
+        [NotMapped]
+        public string FriendlySeverity
+        {
+            get
+            {
+                switch (Severity)
+                {
+                    case 1:
+                        return "Alta";
+                    case 2:
+                        return "Media";
+                    case 3:
+                        return "Baja";
+                    default:
+                        return "No especificada";
+                }
+            }
+        }
     }
 }

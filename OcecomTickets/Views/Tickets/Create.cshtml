@@ -20,9 +20,9 @@
             <div class="col-md-10">
                 @{ 
                     var severityItems = new List<SelectListItem> {
-                        new SelectListItem { Text = "Alta", Value = "Alta" },
-                        new SelectListItem { Text = "Media", Value = "Media" },
-                        new SelectListItem { Text = "Baja", Value = "Baja" },
+                        new SelectListItem { Text = "Alta", Value = "1" },
+                        new SelectListItem { Text = "Media", Value = "2" },
+                        new SelectListItem { Text = "Baja", Value = "3" },
                     };
                 }
                 @Html.DropDownListFor(model => model.Severity, severityItems, "Seleccionar", new { @class = "form-control" })

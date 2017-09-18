@@ -22,3 +22,17 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.ticketsTableContainer {
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.ticketsTableContainer tr {
+    cursor:pointer;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover {
+    background-color: rgba(135,206,250,.25);
+    
+}
