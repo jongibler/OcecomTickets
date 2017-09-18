@@ -32,7 +32,7 @@ namespace OcecomTickets.Controllers
         private IQueryable<Ticket> ApplySorting(string sortBy, IQueryable<Ticket> ticketsQuery)
         {
             ViewBag.ClientSort = sortBy == "client" ? "clientDesc" : "client";
-            ViewBag.DateSort = sortBy == "date" ? "dateDesc" : "date";
+            ViewBag.DateSort = sortBy == "dateDesc" ? "date" : "dateDesc";
             ViewBag.SeveritySort = sortBy == "severity" ? "severityDesc" : "severity";
             ViewBag.CategorySort = sortBy == "category" ? "categoryDesc" : "category";
 
@@ -63,7 +63,7 @@ namespace OcecomTickets.Controllers
                     ticketsQuery = ticketsQuery.OrderByDescending(t => t.Category);
                     break;
                 default:
-                    ticketsQuery.OrderBy(t => t.CreationDate);
+                    ticketsQuery = ticketsQuery.OrderBy(t => t.CreationDate);
                     break;
             }
 
