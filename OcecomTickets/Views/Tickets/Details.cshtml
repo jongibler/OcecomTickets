@@ -1,17 +1,17 @@
 ﻿@model OcecomTickets.Models.Ticket
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle Ticket";
 }
 
-<h2>Details</h2>
+<h2>Detalles del Ticket</h2>
+<h3>Estado: @Html.DisplayFor(model => model.Status)</h3>
 
 <div>
-    <h4>Ticket</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
+            Fecha de Creación
         </dt>
 
         <dd>
@@ -19,15 +19,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Severity)
+            Severidad
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Severity)
+            @Html.DisplayFor(model => model.FriendlySeverity)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Category)
+            Categoría
         </dt>
 
         <dd>
@@ -35,16 +35,72 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Note)
+            Nota
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Note)
         </dd>
 
+        @if (Model.Status == "Cerrado")
+        {
+            <dt>Fecha de Cierre</dt>
+            <dd>@Html.DisplayFor(model => model.ClosedDate)</dd>
+            <dt>Cerrado Por</dt>
+            <dd>@Html.DisplayFor(model => model.ClosedByUser)</dd>
+            <dt>Solución</dt>
+            <dd>@Html.DisplayFor(model => model.SolutionNote)</dd>
+        }
+
     </dl>
 </div>
+
+
+
+@if (Model.Status != "Cerrado")
+{
+    <div>
+        <h3>Cerrar Ticket</h3>
+        <hr />
+        <form action="/Tickets/Close/@Model.Id" method="post">
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="solution">Solución</label>
+                <div class="col-md-10">
+                    <textarea class="form-control text-box multi-line" id="solution" name="solution"></textarea>
+                    <span id="closeTicketValidation" class="field-validation-valid text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10" style="margin-top:20px;">
+                    <input type="submit" value="Cerrar Ticket" class="btn btn-default" onclick="return validateCloseTicket()" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+}
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Regresar al Listado", "Index")
 </p>
+
+
+<script>
+    function validateCloseTicket() {
+        var solutionText = $('#solution').val();
+        if (isNullOrWhitespace(solutionText)) {            
+            $('#closeTicketValidation').text('Se debe especificar la solución.');
+            return false;
+        }
+        return true;
+    }
+
+    function isNullOrWhitespace(input) {
+
+        if (typeof input === 'undefined' || input == null) return true;
+
+        return input.replace(/\s/g, '').length < 1;
+    }
+</script>

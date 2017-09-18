@@ -33,6 +33,7 @@ namespace OcecomTickets.Controllers
         {
             ViewBag.ClientSort = sortBy == "client" ? "clientDesc" : "client";
             ViewBag.DateSort = sortBy == "dateDesc" ? "date" : "dateDesc";
+            ViewBag.CloseDateSort = sortBy == "closeDateDesc" ? "closeDate" : "closeDateDesc";
             ViewBag.SeveritySort = sortBy == "severity" ? "severityDesc" : "severity";
             ViewBag.CategorySort = sortBy == "category" ? "categoryDesc" : "category";
 
@@ -49,6 +50,12 @@ namespace OcecomTickets.Controllers
                     break;
                 case "dateDesc":
                     ticketsQuery = ticketsQuery.OrderByDescending(t => t.CreationDate);
+                    break;
+                case "closeDate":
+                    ticketsQuery = ticketsQuery.OrderBy(t => t.ClosedDate);
+                    break;
+                case "closeDateDesc":
+                    ticketsQuery = ticketsQuery.OrderByDescending(t => t.ClosedDate);
                     break;
                 case "severity":
                     ticketsQuery = ticketsQuery.OrderBy(t => t.Severity);
@@ -125,6 +132,24 @@ namespace OcecomTickets.Controllers
             }
 
             return View(ticket);
+        }
+
+        [HttpPost]
+        public ActionResult Close(int id, string solution)
+        {
+            Ticket ticket = db.Tickets.Find(id);
+            if (ticket == null)
+            {
+                return HttpNotFound();
+            }
+
+            ticket.Status = "Cerrado";
+            ticket.ClosedDate = DateTime.Now;
+            ticket.ClosedByUser = User.Identity.Name;
+            ticket.SolutionNote = solution;
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id });
         }
 
         // GET: Tickets/Edit/5

@@ -50,5 +50,12 @@ namespace OcecomTickets.Models
                 }
             }
         }
+
+        [DisplayFormat(DataFormatString = "{0:dd MMM. h:mm tt}")]
+        public DateTime ClosedDate { get; set; }
+
+        public string ClosedByUser { get; set; }
+
+        public string SolutionNote { get; set; }
     }
 }
