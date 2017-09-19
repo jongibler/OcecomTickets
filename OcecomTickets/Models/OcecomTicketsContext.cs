@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
 
 namespace OcecomTickets.Models
 {
@@ -19,8 +15,9 @@ namespace OcecomTickets.Models
         {
         }
 
-        public System.Data.Entity.DbSet<OcecomTickets.Models.Client> Clients { get; set; }
+        public DbSet<Client> Clients { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
 
     }

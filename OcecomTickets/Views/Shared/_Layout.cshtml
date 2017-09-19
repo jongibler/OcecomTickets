@@ -25,9 +25,17 @@
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>
                         <li>@Html.ActionLink("Clientes", "Index", "Clients")</li>                        
+                        <li>@Html.ActionLink("Empleados", "Index", "Employees")</li>                        
                     </ul>
                 }
                 @if (User.IsInRole("Client"))
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Mis Tickets", "Index", "Tickets")</li>
+                        <li>@Html.ActionLink("Crear Nuevo Ticket", "Create", "Tickets")</li>
+                    </ul>
+                }
+                @if (User.IsInRole("Employee"))
                 {
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Tickets", "Index", "Tickets")</li>

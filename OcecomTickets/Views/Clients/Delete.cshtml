@@ -7,6 +7,7 @@
 <h2>Borrar Cliente</h2>
 
 <h3>¿Estás seguro que quieres borrar el cliente?</h3>
+<h4>Se borrarán también todos los tickets de este cliente.</h4>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -23,10 +24,10 @@
         <dt>Teléfono de Oficina</dt>
         <dd>@Html.DisplayFor(model => model.OfficePhone)</dd>
 
-        <dt>Teléfono Móvil</dt>
+        <dt>Celular</dt>
         <dd>@Html.DisplayFor(model => model.MobilePhone)</dd>
 
-        <dt>Horas Mensuales</dt>
+        <dt>Hrs. Servicio x Mes</dt>
         <dd>@Html.DisplayFor(model => model.MonthlyHours)</dd>
 
         <dt>Notas</dt>
@@ -39,7 +40,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Borrar Cliente" class="btn btn-default" /> |
-            @Html.ActionLink("Regresar al listado", "Index")
+            @Html.ActionLink("Regresar al Listado", "Index")
         </div>
     }
 </div>

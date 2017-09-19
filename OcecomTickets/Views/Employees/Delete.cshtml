@@ -1,0 +1,40 @@
+﻿@model OcecomTickets.Models.Employee
+
+@{
+    ViewBag.Title = "Borrar Empleado";
+}
+
+<h2>Borrar Empleado</h2>
+
+<h3>¿Estás seguro que quieres borrar el empleado?</h3>
+<h4>Se borrarán también todas las horas de este empleado.</h4>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>E-mail</dt>
+        <dd>@Html.DisplayFor(model => model.Email)</dd>
+
+        <dt>Nombre</dt>
+        <dd>@Html.DisplayFor(model => model.Name)</dd>
+
+        <dt>Celular</dt>
+        <dd>@Html.DisplayFor(model => model.MobilePhone)</dd>
+
+        <dt>Teléfono de Casa</dt>
+        <dd>@Html.DisplayFor(model => model.HomePhone)</dd>
+
+        <dt>Notas</dt>
+        <dd>@Html.DisplayFor(model => model.Notes)</dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar Empleado" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar al Listado", "Index")
+        </div>
+    }
+</div>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<OcecomTickets.Models.Client>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Clientes";
 }
 
 <h2>Clientes</h2>
@@ -13,7 +13,9 @@
     <tr>
         <th>Cliente</th>
         <th>Contacto</th>
-        <th>Horas Mensuales</th>
+        <th>Celular</th>
+        <th>E-mail</th>
+        <th>Hrs. Servicio x Mes</th>
         <th></th>
     </tr>
 
@@ -22,6 +24,8 @@
         <tr>
             <td>@Html.DisplayFor(modelItem => item.ClientName)</td>
             <td>@Html.DisplayFor(modelItem => item.ContactName)</td>
+            <td>@Html.DisplayFor(modelItem => item.MobilePhone)</td>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
             <td>@Html.DisplayFor(modelItem => item.MonthlyHours)</td>
             <td>
                 @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |

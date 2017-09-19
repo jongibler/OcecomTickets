@@ -1,10 +1,10 @@
-﻿@model OcecomTickets.Models.Client
+﻿@model OcecomTickets.Models.Employee
 
 @{
-    ViewBag.Title = "Crear Cliente";
+    ViewBag.Title = "Crear Empleado";
 }
 
-<h2>Crear Cliente</h2>
+<h2>Crear Empleado</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -20,39 +19,23 @@
             @Html.LabelFor(model => model.Email, "E-mail", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })                
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Password, "Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", autocomplete="new-password" } })
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", autocomplete = "new-password" } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
-        
-        <div class="form-group">            
-            @Html.LabelFor(model => model.ClientName, "Nombre del Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ClientName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ClientName, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ContactName, "Nombre del Contacto", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, "Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ContactName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ContactName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OfficePhone, "Teléfono de Oficina", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OfficePhone, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OfficePhone, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -65,10 +48,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MonthlyHours, "Hrs. Servicio x Mes", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.HomePhone, "Teléfono Casa", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MonthlyHours, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MonthlyHours, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.HomePhone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HomePhone, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -82,7 +65,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear Cliente" class="btn btn-default" />
+                <input type="submit" value="Crear Empleado" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -94,5 +77,4 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    
 }

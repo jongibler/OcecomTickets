@@ -153,6 +153,7 @@ namespace OcecomTickets.Controllers
         }
 
         // GET: Tickets/Edit/5
+        [NonAction]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -170,6 +171,7 @@ namespace OcecomTickets.Controllers
         // POST: Tickets/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [NonAction]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,CreationDate,Severity,Category,Note")] Ticket ticket)
@@ -184,6 +186,7 @@ namespace OcecomTickets.Controllers
         }
 
         // GET: Tickets/Delete/5
+        [NonAction]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -199,6 +202,7 @@ namespace OcecomTickets.Controllers
         }
 
         // POST: Tickets/Delete/5
+        [NonAction]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
