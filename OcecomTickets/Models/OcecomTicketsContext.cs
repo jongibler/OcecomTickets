@@ -18,7 +18,7 @@ namespace OcecomTickets.Models
         public DbSet<Client> Clients { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Employee> Employees { get; set; }
-
+        public DbSet<TicketHourRecord> TicketHourRecords { get; set; }
 
     }
 }

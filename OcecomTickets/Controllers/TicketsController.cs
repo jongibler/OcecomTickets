@@ -152,6 +152,16 @@ namespace OcecomTickets.Controllers
             return RedirectToAction("Details", new { id });
         }
 
+        [HttpPost]
+        [Authorize(Roles ="Employee")]
+        public ActionResult CaptureHours(int id, int hours, string comment)
+        {
+            int employeeId = db.Employees.Where(e => e.Email == User.Identity.Name).Select(e => e.Id).First();
+            db.TicketHourRecords.Add(new TicketHourRecord { Hours = hours, Comment = comment, TicketId = id, EmployeeId = employeeId });
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id });
+        }
+
         // GET: Tickets/Edit/5
         [NonAction]
         public ActionResult Edit(int? id)

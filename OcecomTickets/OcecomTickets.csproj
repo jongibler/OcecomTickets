@@ -206,6 +206,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OcecomTicketsContext.cs" />
     <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\TicketHours.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

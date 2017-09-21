@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace OcecomTickets.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class EmployeesController : Controller
     {
         ApplicationUserManager _userManager;

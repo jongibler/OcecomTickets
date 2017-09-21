@@ -23,6 +23,7 @@ namespace OcecomTickets.Models
         public string MobilePhone { get; set; }
 
         [Required(ErrorMessage = "Requerido")]
+        [Range(1,99, ErrorMessage = "Entre 1 y 99")]
         public int MonthlyHours { get; set; }
 
         [DataType(DataType.MultilineText)]

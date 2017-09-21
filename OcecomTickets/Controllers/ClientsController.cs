@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity;
 
 namespace OcecomTickets.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class ClientsController : Controller
     {
         ApplicationUserManager _userManager;
