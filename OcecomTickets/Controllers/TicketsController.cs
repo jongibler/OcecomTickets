@@ -156,9 +156,26 @@ namespace OcecomTickets.Controllers
         [Authorize(Roles ="Employee")]
         public ActionResult CaptureHours(int id, int hours, string comment)
         {
-            int employeeId = db.Employees.Where(e => e.Email == User.Identity.Name).Select(e => e.Id).First();
-            db.TicketHourRecords.Add(new TicketHourRecord { Hours = hours, Comment = comment, TicketId = id, EmployeeId = employeeId });
+            Ticket ticket = db.Tickets.Find(id);
+
+            if (ticket == null)
+                return HttpNotFound();
+
+            if (ticket.Status == "Abierto")
+                ticket.Status = "En Progreso";
+
+            int employeeId = db.Employees
+                .Where(e => e.Email == User.Identity.Name).Select(e => e.Id).First();
+            db.TicketHourRecords.Add(new TicketHourRecord
+            {
+                Hours = hours,
+                Comment = comment,
+                TicketId = id,
+                EmployeeId = employeeId,
+                Date = DateTime.Now
+            });
             db.SaveChanges();
+
             return RedirectToAction("Details", new { id });
         }
 

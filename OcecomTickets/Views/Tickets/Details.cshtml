@@ -22,6 +22,18 @@
         <dt>Nota</dt>
         <dd>@Html.DisplayFor(model => model.Note)</dd>
 
+        @if (Model.Status == "En Progreso" || Model.Status == "Cerrado")
+        {
+            <dt>Horas Trabajadas</dt>
+            <dd>@Model.TicketHourRecords.Sum(th => th.Hours) hrs</dd>
+            if (Model.TicketHourRecords.Any())
+            {
+                var lastEmployee = Model.TicketHourRecords.OrderByDescending(th => th.Date).First().Employee;
+                <dt>Atendido Por</dt>
+                <dd>@lastEmployee.Name (@lastEmployee.MobilePhone)</dd>
+            }
+        }
+
         @if (Model.Status == "Cerrado")
         {
             <dt>Fecha de Cierre</dt>
@@ -35,7 +47,7 @@
     </dl>
 </div>
 
-@if (Model.Status != "Cerrado" && User.IsInRole("Employee"))
+@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
 {
     <div>
         <h3>Horas Capturadas</h3>
@@ -48,42 +60,41 @@
                 <th>Capturado Por</th>
                 <th>Comentario</th>
             </tr>
-            <tr>
-                <td>2 ago</td>
-                <td>2 hrs</td>
-                <td>Fulano</td>
-                <td>bla bla bla se hizo un cambio y se le ayudo a que blablabl y blablabab</td>
-            </tr>
-            <tr>
-                <td>2 ago</td>
-                <td>2 hrs</td>
-                <td>Fulano</td>
-                <td>bla bla bla se hizo un cambio y se le ayudo a que blablabl y blablabab</td>
-            </tr>
+            @foreach (var ticketHourRecord in Model.TicketHourRecords.OrderBy(th => th.Date))
+            {
+                <tr>
+                    <td>@ticketHourRecord.Date.ToString("dd MMM")</td>
+                    <td>@ticketHourRecord.Hours hrs</td>
+                    <td>@ticketHourRecord.Employee.Name</td>
+                    <td>@ticketHourRecord.Comment</td>
+                </tr>
+            }
         </table>
 
-        <form action="/Tickets/CaptureHours/@Model.Id" method="post">
-            <div class="form-group">
-                <label class="control-label col-md-2" for="hours">Horas a Capturar</label>
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line" id="hours" name="hours" type="number" />
-                    <span id="hoursValidation" class="field-validation-valid text-danger"></span>
+        @if (Model.Status != "Cerrado" && User.IsInRole("Employee"))
+        {
+            <form action="/Tickets/CaptureHours/@Model.Id" method="post">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="hours">Horas a Capturar</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="hours" name="hours" type="number" />
+                        <span id="hoursValidation" class="field-validation-valid text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-md-2" for="comment">Comentario</label>
-                <div class="col-md-10">
-                    <textarea class="form-control text-box multi-line" id="comment" name="comment" style="margin-top:10px;"></textarea>
-                    <span id="commentValidation" class="field-validation-valid text-danger"></span>
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="comment">Comentario</label>
+                    <div class="col-md-10">
+                        <textarea class="form-control text-box multi-line" id="comment" name="comment" style="margin-top:10px;"></textarea>
+                        <span id="commentValidation" class="field-validation-valid text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10" style="margin-top:20px;">
-                    <input type="submit" value="Capturar Horas" class="btn btn-default" onclick="return validateCaptureHours()" />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10" style="margin-top:20px;">
+                        <input type="submit" value="Capturar Horas" class="btn btn-default" onclick="return validateCaptureHours()" />
+                    </div>
                 </div>
-            </div>
-        </form>
-
+            </form>
+        }
 
     </div>
 }

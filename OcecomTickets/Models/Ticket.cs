@@ -57,5 +57,7 @@ namespace OcecomTickets.Models
         public string ClosedByUser { get; set; }
 
         public string SolutionNote { get; set; }
+
+        public virtual ICollection<TicketHourRecord> TicketHourRecords { get; set; }
     }
 }

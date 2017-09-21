@@ -11,6 +11,9 @@ namespace OcecomTickets.Models
         public int Id { get; set; }
 
         [Required]
+        public DateTime Date { get; set; }
+
+        [Required]
         public int Hours { get; set; }
 
         [Required]
