@@ -137,9 +137,12 @@ namespace OcecomTickets.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string pass)
         {
-            return View();
+            if (pass == "Jonathan123")
+                return View();
+            else
+                return HttpNotFound();
         }
 
         //
@@ -155,6 +158,7 @@ namespace OcecomTickets.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id, "Admin");                    
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
