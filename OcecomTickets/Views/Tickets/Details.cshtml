@@ -53,23 +53,30 @@
         <h3>Horas Capturadas</h3>
         <hr />
 
-        <table class="table table-striped">
-            <tr>
-                <th>Fecha</th>
-                <th>Horas</th>
-                <th>Capturado Por</th>
-                <th>Comentario</th>
-            </tr>
-            @foreach (var ticketHourRecord in Model.TicketHourRecords.OrderBy(th => th.Date))
-            {
+        @if (Model.TicketHourRecords.Any())
+        {
+            <table class="table table-striped">
                 <tr>
-                    <td>@ticketHourRecord.Date.ToString("dd MMM")</td>
-                    <td>@ticketHourRecord.Hours hrs</td>
-                    <td>@ticketHourRecord.Employee.Name</td>
-                    <td>@ticketHourRecord.Comment</td>
+                    <th>Fecha</th>
+                    <th>Horas</th>
+                    <th>Capturado Por</th>
+                    <th>Comentario</th>
                 </tr>
-            }
-        </table>
+                @foreach (var ticketHourRecord in Model.TicketHourRecords.OrderBy(th => th.Date))
+                {
+                    <tr>
+                        <td>@ticketHourRecord.Date.ToString("dd MMM")</td>
+                        <td>@ticketHourRecord.Hours hrs</td>
+                        <td>@ticketHourRecord.Employee.Name</td>
+                        <td>@ticketHourRecord.Comment</td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p><i>No se tienen horas capturadas.</i></p>
+        }
 
         @if (Model.Status != "Cerrado" && User.IsInRole("Employee"))
         {

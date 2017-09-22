@@ -118,7 +118,7 @@ namespace OcecomTickets.Controllers
         [Authorize(Roles = "Client")]
         public ActionResult Create(Ticket ticket)
         {
-            ticket.CreationDate = DateTime.Now;
+            ticket.CreationDate = DateTime.Now;            
             ticket.Status = "Abierto";
             ticket.ClientId = db.Clients.Where(c => c.Email == User.Identity.Name).Select(c => c.Id).First();
 

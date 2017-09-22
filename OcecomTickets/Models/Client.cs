@@ -15,6 +15,7 @@ namespace OcecomTickets.Models
 
         [Required(ErrorMessage = "Requerido")]
         [EmailAddress(ErrorMessage ="Inválido")]
+        [MaxLength(256)]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Requerido")]

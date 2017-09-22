@@ -12,20 +12,21 @@ namespace OcecomTickets.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(25)]
         public string Status { get; set; }
 
         [Required]
         [DisplayFormat(DataFormatString = "{0:dd MMM. h:mm tt}")]
         public DateTime CreationDate { get; set; }
 
-        [Required(ErrorMessage = "Requerido")]
+        [Required(ErrorMessage = "Requerido")]        
         public int Severity { get; set; }
 
         [Required(ErrorMessage = "Requerido")]
+        [MaxLength(25)]
         public string Category { get; set; }
 
         [Required(ErrorMessage = "Requerido")]
-
         [DataType(DataType.MultilineText)]
         public string Note { get; set; }
 
@@ -52,8 +53,9 @@ namespace OcecomTickets.Models
         }
 
         [DisplayFormat(DataFormatString = "{0:dd MMM. h:mm tt}")]
-        public DateTime ClosedDate { get; set; }
+        public DateTime? ClosedDate { get; set; }
 
+        [MaxLength(256)]
         public string ClosedByUser { get; set; }
 
         public string SolutionNote { get; set; }
