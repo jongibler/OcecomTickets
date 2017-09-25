@@ -9,31 +9,41 @@
 <p>
     @Html.ActionLink("Crear Nuevo Empleado", "Create")
 </p>
-<table class="table table-striped">
-    <tr>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Celular</th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MobilePhone)
-        </td>
-        <td>
-            @Html.ActionLink("Detalles", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Borrar", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+@if (Model.Any())
+{
+    <div class="table-container">
+        <table class="table table-striped table-responsive">
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Celular</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MobilePhone)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Borrar", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 }
-
-</table>
+else
+{
+    <p><i>No se tienen empleados registrados.</i></p>
+}

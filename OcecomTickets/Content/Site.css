@@ -34,3 +34,7 @@ textarea {
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover {
     background-color: rgba(135,206,250,.25);    
 }
+
+.table-container {
+        overflow-x:auto;
+}
