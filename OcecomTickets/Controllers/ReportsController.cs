@@ -13,9 +13,31 @@ namespace OcecomTickets.Controllers
         [Authorize(Roles ="Client")]
         public ActionResult Clients()
         {
-            var ci = new CultureInfo("es-MX");
-            ViewBag.CurrentMonth = DateTime.Today.ToString("MMMM yyyy", ci);
+            ViewBag.CurrentMonth = GetMonthText();
             return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Admin()
+        {
+            ViewBag.CurrentMonth = GetMonthText();
+            return View();
+        }
+
+        static string GetMonthText()
+        {
+            var ci = new CultureInfo("es-MX");
+            var currentMonthText = DateTime.Today.ToString("MMMM yyyy", ci);
+            return UppercaseFirst(currentMonthText);
+        }
+
+        static string UppercaseFirst(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            return char.ToUpper(s[0]) + s.Substring(1);
         }
     }
 }
