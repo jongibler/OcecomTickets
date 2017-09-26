@@ -1,13 +1,13 @@
 ﻿@model OcecomTickets.Models.Employee
 
 @{
-    ViewBag.Title = "Borrar Empleado";
+    ViewBag.Title = "Borrar Colaborador";
 }
 
-<h2>Borrar Empleado</h2>
+<h2>Borrar Colaborador</h2>
 
-<h3>¿Estás seguro que quieres borrar el empleado?</h3>
-<h4>Se borrarán también todas las horas de este empleado.</h4>
+<h3>¿Estás seguro que quieres borrar el colaborador?</h3>
+<h4>Se borrarán también todas las horas de este colaborador.</h4>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -33,7 +33,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Borrar Empleado" class="btn btn-default" /> |
+            <input type="submit" value="Borrar Colaborador" class="btn btn-default" /> |
             @Html.ActionLink("Regresar al Listado", "Index")
         </div>
     }

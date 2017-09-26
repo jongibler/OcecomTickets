@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Reporte Mensual";
+}
+
+<h2>Reporte Mensual</h2>
+<h3>@ViewBag.CurrentMonth</h3>
+<a href="">Mes Anterior</a> | <a href="">Imprimir</a>
+<hr />
+<h4>Tickets de Usuario: 7  -  Horas:  9</h4>
+<h4>Tickets de Oficina: 3  -  Horas:  7</h4>
+<h4><b>Total de Horas: 16</b></h4>
+<hr />
+<h4>Desgloce Tickets de Oficina</h4>
+<div class="table-container" style="margin-top:20px;">
+    <table class="table table-striped table-responsive">
+        <tr>
+            <th>Fecha</th>
+            <th>Horas</th>
+            <th>Motivo</th>
+            <th>Solución</th>
+        </tr>
+        <tr>
+            <td>21 Sep</td>
+            <td>3</td>
+            <td>Se cayó la red en toda la oficina.</td>
+            <td>Se reestableció la red.</td>
+        </tr>
+        <tr>
+            <td>23 Sep</td>
+            <td>3</td>
+            <td>El conmutador no funciona. Intermitencia en la salida de la línea.</td>
+            <td>Se re configuró el conmutador. Ya funciona.</td>
+        </tr>
+        <tr>
+            <td>23 Sep</td>
+            <td>1</td>
+            <td>No sirve el internet.</td>
+            <td>Se reinició el router.</td>
+        </tr>
+    </table>
+</div>
+

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<OcecomTickets.Models.Employee>
 
 @{
-    ViewBag.Title = "Empleados";
+    ViewBag.Title = "Colaboradores";
 }
 
-<h2>Empleados</h2>
+<h2>Colaboradores</h2>
 
 <p>
-    @Html.ActionLink("Crear Nuevo Empleado", "Create")
+    @Html.ActionLink("Crear Nuevo Colaborador", "Create")
 </p>
 
 @if (Model.Any())
@@ -45,5 +45,5 @@
 }
 else
 {
-    <p><i>No se tienen empleados registrados.</i></p>
+    <p><i>No se tienen colaboradores registrados.</i></p>
 }
