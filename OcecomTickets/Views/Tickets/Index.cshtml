@@ -42,7 +42,9 @@
                             @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
                             {
                                 <th>@Html.ActionLink("Cliente", "Index", new { sortBy = ViewBag.ClientSort, currentTab = "open" })</th>
+                                
                             }
+                            <th>@Html.ActionLink("Contacto", "Index", new { sortBy = ViewBag.ContactSort, currentTab = "open" })</th>
                             <th>@Html.ActionLink("Fecha Alta", "Index", new { sortBy = ViewBag.DateSort, currentTab = "open" })</th>
                             <th>@Html.ActionLink("Severidad", "Index", new { sortBy = ViewBag.SeveritySort, currentTab = "open" })</th>
                             <th>@Html.ActionLink("Categoría", "Index", new { sortBy = ViewBag.CategorySort, currentTab = "open" })</th>
@@ -57,7 +59,11 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Client.ClientName)
                                     </td>
+                                   
                                 }
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Client.ContactName)
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CreationDate)
                                 </td>
@@ -93,6 +99,8 @@
                             {
                                 <th>@Html.ActionLink("Cliente", "Index", new { sortBy = ViewBag.ClientSort, currentTab = "inprogress" })</th>
                             }
+                            <th>@Html.ActionLink("Contacto", "Index", new { sortBy = ViewBag.ContactSort, currentTab = "inprogress" })</th>
+                            <th>@Html.ActionLink("Atendió", "Index", new { sortBy = ViewBag.EmployeeSort, currentTab = "inprogress" })</th>
                             <th>@Html.ActionLink("Fecha Alta", "Index", new { sortBy = ViewBag.DateSort, currentTab = "inprogress" })</th>
                             <th>@Html.ActionLink("Severidad", "Index", new { sortBy = ViewBag.SeveritySort, currentTab = "inprogress" })</th>
                             <th>@Html.ActionLink("Categoría", "Index", new { sortBy = ViewBag.CategorySort, currentTab = "inprogress" })</th>
@@ -108,6 +116,12 @@
                                         @Html.DisplayFor(modelItem => item.Client.ClientName)
                                     </td>
                                 }
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Client.ContactName)
+                                </td>
+                                <td>
+                                    @item.LastEmployeeName
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CreationDate)
                                 </td>
@@ -143,6 +157,8 @@
                             {
                                 <th>@Html.ActionLink("Cliente", "Index", new { sortBy = ViewBag.ClientSort, currentTab = "closed" })</th>
                             }
+                            <th>@Html.ActionLink("Contacto", "Index", new { sortBy = ViewBag.ContactSort, currentTab = "closed" })</th>
+                            <th>@Html.ActionLink("Atendió", "Index", new { sortBy = ViewBag.EmployeeSort, currentTab = "closed" })</th>
                             <th>@Html.ActionLink("Fecha Alta", "Index", new { sortBy = ViewBag.DateSort, currentTab = "closed" })</th>
                             <th>@Html.ActionLink("Fecha Cierre", "Index", new { sortBy = ViewBag.CloseDateSort, currentTab = "closed" })</th>
                             <th>@Html.ActionLink("Severidad", "Index", new { sortBy = ViewBag.SeveritySort, currentTab = "closed" })</th>
@@ -159,6 +175,12 @@
                                         @Html.DisplayFor(modelItem => item.Client.ClientName)
                                     </td>
                                 }
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Client.ContactName)
+                                </td>
+                                <td>
+                                    @item.LastEmployeeName
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CreationDate)
                                 </td>

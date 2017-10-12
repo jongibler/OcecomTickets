@@ -8,6 +8,7 @@ namespace OcecomTickets.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Requerido")]
+        [MaxLength(250)]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Requerido")]

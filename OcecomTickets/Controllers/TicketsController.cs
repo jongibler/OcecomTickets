@@ -36,6 +36,8 @@ namespace OcecomTickets.Controllers
             ViewBag.CloseDateSort = sortBy == "closeDateDesc" ? "closeDate" : "closeDateDesc";
             ViewBag.SeveritySort = sortBy == "severity" ? "severityDesc" : "severity";
             ViewBag.CategorySort = sortBy == "category" ? "categoryDesc" : "category";
+            ViewBag.ContactSort = sortBy == "contact" ? "contactDesc" : "contact";
+            ViewBag.EmployeeSort = sortBy == "employee" ? "employeeDesc" : "employee";
 
             switch (sortBy)
             {
@@ -68,6 +70,18 @@ namespace OcecomTickets.Controllers
                     break;
                 case "categoryDesc":
                     ticketsQuery = ticketsQuery.OrderByDescending(t => t.Category);
+                    break;
+                case "contact":
+                    ticketsQuery = ticketsQuery.OrderBy(t => t.Client.ContactName);
+                    break;
+                case "contactDesc":
+                    ticketsQuery = ticketsQuery.OrderByDescending(t => t.Client.ContactName);
+                    break;
+                case "employee":
+                    ticketsQuery = ticketsQuery.OrderBy(t => t.LastEmployeeName);
+                    break;
+                case "employeeDesc":
+                    ticketsQuery = ticketsQuery.OrderByDescending(t => t.LastEmployeeName);
                     break;
                 default:
                     ticketsQuery = ticketsQuery.OrderBy(t => t.CreationDate);

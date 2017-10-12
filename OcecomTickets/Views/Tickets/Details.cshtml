@@ -29,7 +29,7 @@
             if (Model.TicketHourRecords.Any())
             {
                 var lastEmployee = Model.TicketHourRecords.OrderByDescending(th => th.Date).First().Employee;
-                <dt>Atendido Por</dt>
+                <dt>Atendió</dt>
                 <dd>@lastEmployee.Name (@lastEmployee.MobilePhone)</dd>
             }
         }

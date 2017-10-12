@@ -33,6 +33,9 @@ namespace OcecomTickets.Models
         public int ClientId { get; set; }
         public virtual Client Client { get; set; }
 
+        [MaxLength(250)]
+        public string LastEmployeeName { get; set; }
+
         [NotMapped]
         public string FriendlySeverity
         {
@@ -61,5 +64,20 @@ namespace OcecomTickets.Models
         public string SolutionNote { get; set; }
 
         public virtual ICollection<TicketHourRecord> TicketHourRecords { get; set; }
+
+        //public string LastEmployeeName
+        //{
+        //    get
+        //    {
+        //        var lastHourRecord = TicketHourRecords
+        //            .OrderBy(t => t.Date)
+        //            .LastOrDefault();
+        //        if (lastHourRecord != null)
+        //        {
+        //            return lastHourRecord.Employee.Name;
+        //        }
+        //        return null;
+        //    }
+        //}
     }
 }
