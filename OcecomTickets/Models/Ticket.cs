@@ -65,19 +65,19 @@ namespace OcecomTickets.Models
 
         public virtual ICollection<TicketHourRecord> TicketHourRecords { get; set; }
 
-        //public string LastEmployeeName
-        //{
-        //    get
-        //    {
-        //        var lastHourRecord = TicketHourRecords
-        //            .OrderBy(t => t.Date)
-        //            .LastOrDefault();
-        //        if (lastHourRecord != null)
-        //        {
-        //            return lastHourRecord.Employee.Name;
-        //        }
-        //        return null;
-        //    }
-        //}
+        [NotMapped]
+        public string LastWorkText
+        {
+            get
+            {
+                if (TicketHourRecords.Any())
+                {
+                    var lastRecord = TicketHourRecords.OrderBy(t => t.Date).Last();
+                    var dateText = lastRecord.Date.ToString("dd MMM. h:mm tt");
+                    return $"{dateText}  -  {lastRecord.Employee.Name}";                    
+                }
+                return " - ";
+            }
+        }
     }
 }
