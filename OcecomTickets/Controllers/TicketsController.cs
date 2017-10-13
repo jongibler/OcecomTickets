@@ -149,7 +149,7 @@ namespace OcecomTickets.Controllers
         }
 
         [HttpPost]
-        public ActionResult Close(int id, string solution)
+        public ActionResult Close(int id, string solution, string cause)
         {
             Ticket ticket = db.Tickets.Find(id);
             if (ticket == null)
@@ -161,6 +161,8 @@ namespace OcecomTickets.Controllers
             ticket.ClosedDate = DateTime.Now;
             ticket.ClosedByUser = User.Identity.Name;
             ticket.SolutionNote = solution;
+            ticket.RootCause = cause;
+
             db.SaveChanges();
 
             return RedirectToAction("Details", new { id });

@@ -42,6 +42,8 @@
             <dd>@Html.DisplayFor(model => model.ClosedByUser)</dd>
             <dt>Solución</dt>
             <dd>@Html.DisplayFor(model => model.SolutionNote)</dd>
+            <dt>Causa Raíz</dt>
+            <dd>@Html.DisplayFor(model => model.RootCause)</dd>
         }
 
     </dl>
@@ -118,7 +120,14 @@
                 <label class="control-label col-md-2" for="solution">Solución</label>
                 <div class="col-md-10">
                     <textarea class="form-control text-box multi-line" id="solution" name="solution"></textarea>
-                    <span id="closeTicketValidation" class="field-validation-valid text-danger"></span>
+                    <span id="solutionValidation" class="field-validation-valid text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="cause">Causa Raíz</label>
+                <div class="col-md-10">
+                    <textarea class="form-control text-box multi-line" id="cause" name="cause"  style="margin-top:10px;"></textarea>
+                    <span id="causeValidation" class="field-validation-valid text-danger"></span>
                 </div>
             </div>
             <div class="form-group">
@@ -152,8 +161,13 @@
 
     function validateCloseTicket() {
         var solutionText = $('#solution').val();
-        if (isNullOrWhitespace(solutionText)) {
-            $('#closeTicketValidation').text('Se debe especificar la solución.');
+        var causeText = $('#cause').val();
+        if (isNullOrWhitespace(solutionText)) {            
+            $('#solutionValidation').text('Se debe especificar solución.');
+            return false;
+        }
+        if (isNullOrWhitespace(causeText)) {
+            $('#causeValidation').text('Se debe especificar la causa raíz.');
             return false;
         }
         return true;

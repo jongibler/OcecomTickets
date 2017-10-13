@@ -167,7 +167,8 @@
                             <th>@Html.ActionLink("Fecha Cierre", "Index", new { sortBy = ViewBag.CloseDateSort, currentTab = "closed" })</th>
                             <th>@Html.ActionLink("Severidad", "Index", new { sortBy = ViewBag.SeveritySort, currentTab = "closed" })</th>
                             <th>@Html.ActionLink("Categoría", "Index", new { sortBy = ViewBag.CategorySort, currentTab = "closed" })</th>
-                            <th>Nota</th>
+                            <th>Causa Raíz</th>
+                            <th>Solución</th>
                         </tr>
 
                         @foreach (var item in Model.Where(t => t.Status == "Cerrado"))
@@ -198,7 +199,10 @@
                                     @Html.DisplayFor(modelItem => item.Category)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Note)
+                                    @Html.DisplayFor(modelItem => item.RootCause)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SolutionNote)
                                 </td>
                             </tr>
                         }
