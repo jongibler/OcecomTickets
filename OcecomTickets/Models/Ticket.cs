@@ -83,6 +83,25 @@ namespace OcecomTickets.Models
                 }
                 return " - ";
             }
+        }        
+
+        [NotMapped]
+        public string StatusColor
+        {
+            get
+            {
+                switch (Status)
+                {
+                    case "Abierto":
+                        return "red";
+                    case "En Progreso":
+                        return "orange";
+                    case "Cerrado":
+                        return "navy";
+                    default:
+                        return "black";
+                }
+            }
         }
     }
 }

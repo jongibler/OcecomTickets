@@ -5,7 +5,14 @@
 }
 
 <h2>Detalles del Ticket</h2>
-<h3>Estado: @Html.DisplayFor(model => model.Status)</h3>
+<h3>Estatus: <b style="color:@Model.StatusColor;">@Model.Status</b></h3>
+<h4>Cliente: <b>@Model.Client.ClientName</b></h4>
+<h4>Contacto: <b>@Model.Client.ContactName - @Model.Client.Email</b></h4>
+<h4>Teléfono Oficina: <b>@Model.Client.OfficePhone</b></h4>
+@if (!String.IsNullOrWhiteSpace(Model.Client.MobilePhone))
+{
+    <h4>Teléfono Móvil: <b>@Model.Client.MobilePhone</b></h4>
+}
 
 <div>
     <hr />
