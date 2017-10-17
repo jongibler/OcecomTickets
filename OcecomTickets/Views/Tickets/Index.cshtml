@@ -147,25 +147,32 @@
 
     <div role="tabpanel" class="tab-pane @(ViewBag.CurrentTab == "closed" ? "active" : "")" id="closed">
         <div class="ticketsTableContainer">
+            <h4>Mostrando meses: @ViewBag.MonthFrom - @ViewBag.MonthTo</h4>
+            <a href="?currentTab=closed&sortBy=@ViewBag.SortBy&monthsBack=@(ViewBag.MonthsBack+1)">Mostrar Mes Anterior</a>
+            <span> | </span>
+            <a href="?currentTab=closed&sortBy=@ViewBag.SortBy&monthsBack=1">Mostrar Mes Actual</a>
+            <hr />
             @if (Model.Count(t => t.Status == "Cerrado") == 0)
             {
                 <p>No se tienen tickets cerrados.</p>
             }
             else
             {
-                <div class="table-container">
+                
+                <div class="table-container">      
+                   
                     <table class="table table-striped table-hover table-responsive">
                         <tr>
                             @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
                             {
-                                <th>@Html.ActionLink("Cliente", "Index", new { sortBy = ViewBag.ClientSort, currentTab = "closed" })</th>
-                                <th>@Html.ActionLink("Contacto", "Index", new { sortBy = ViewBag.ContactSort, currentTab = "closed" })</th>
+                                <th>@Html.ActionLink("Cliente", "Index", new { sortBy = ViewBag.ClientSort, currentTab = "closed", monthsBack = ViewBag.MonthsBack })</th>
+                                <th>@Html.ActionLink("Contacto", "Index", new { sortBy = ViewBag.ContactSort, currentTab = "closed", monthsBack = ViewBag.MonthsBack })</th>
                             }                            
-                            <th>@Html.ActionLink("Atendió", "Index", new { sortBy = ViewBag.EmployeeSort, currentTab = "closed" })</th>
-                            <th>@Html.ActionLink("Fecha Alta", "Index", new { sortBy = ViewBag.DateSort, currentTab = "closed" })</th>
-                            <th>@Html.ActionLink("Fecha Cierre", "Index", new { sortBy = ViewBag.CloseDateSort, currentTab = "closed" })</th>
-                            <th>@Html.ActionLink("Severidad", "Index", new { sortBy = ViewBag.SeveritySort, currentTab = "closed" })</th>
-                            <th>@Html.ActionLink("Categoría", "Index", new { sortBy = ViewBag.CategorySort, currentTab = "closed" })</th>
+                            <th>@Html.ActionLink("Atendió", "Index", new { sortBy = ViewBag.EmployeeSort, currentTab = "closed", monthsBack = ViewBag.MonthsBack })</th>
+                            <th>@Html.ActionLink("Fecha Alta", "Index", new { sortBy = ViewBag.DateSort, currentTab = "closed", monthsBack = ViewBag.MonthsBack })</th>
+                            <th>@Html.ActionLink("Fecha Cierre", "Index", new { sortBy = ViewBag.CloseDateSort, currentTab = "closed", monthsBack = ViewBag.MonthsBack })</th>
+                            <th>@Html.ActionLink("Severidad", "Index", new { sortBy = ViewBag.SeveritySort, currentTab = "closed", monthsBack = ViewBag.MonthsBack })</th>
+                            <th>@Html.ActionLink("Categoría", "Index", new { sortBy = ViewBag.CategorySort, currentTab = "closed", monthsBack = ViewBag.MonthsBack })</th>
                             <th>Causa Raíz</th>
                             <th>Solución</th>
                         </tr>
