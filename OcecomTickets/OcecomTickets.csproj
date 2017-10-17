@@ -204,6 +204,7 @@
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LinkTicketViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OcecomTicketsContext.cs" />
     <Compile Include="Models\Ticket.cs" />
@@ -285,6 +286,7 @@
     <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\Reports\Clients.cshtml" />
     <Content Include="Views\Reports\Admin.cshtml" />
+    <Content Include="Views\Tickets\LinkTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

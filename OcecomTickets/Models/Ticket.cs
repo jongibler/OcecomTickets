@@ -9,10 +9,14 @@ namespace OcecomTickets.Models
 {
     public class Ticket
     {
+        //Keys
         public int Id { get; set; }
 
         public int ClientId { get; set; }
 
+        public int? LinkedTicketId { get; set; }
+
+        //Fields
         [Required]
         [MaxLength(25)]
         public string Status { get; set; }
@@ -45,11 +49,15 @@ namespace OcecomTickets.Models
                 
         public string RootCause { get; set; }
 
-
+        //Related Entities
         public virtual Client Client { get; set; }
 
-        public virtual ICollection<TicketHourRecord> TicketHourRecords { get; set; }
+        public virtual Ticket LinkedTicket { get; set; }
 
+        public virtual ICollection<TicketHourRecord> TicketHourRecords { get; set; }
+               
+
+        //View Model Helpers
 
         [NotMapped]
         public string FriendlySeverity
@@ -103,5 +111,8 @@ namespace OcecomTickets.Models
                 }
             }
         }
+
+        
+        
     }
 }

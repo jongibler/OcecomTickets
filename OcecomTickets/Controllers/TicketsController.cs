@@ -26,7 +26,7 @@ namespace OcecomTickets.Controllers
             ticketsQuery = FilterForClient(ticketsQuery);
             ticketsQuery = ApplySorting(sortBy, ticketsQuery);
 
-            return View(ticketsQuery.ToList()); 
+            return View(ticketsQuery.ToList());
         }
 
         private IQueryable<Ticket> ApplySorting(string sortBy, IQueryable<Ticket> ticketsQuery)
@@ -118,9 +118,18 @@ namespace OcecomTickets.Controllers
         }
 
         // GET: Tickets/Create
-        [Authorize(Roles ="Client")]
-        public ActionResult Create()
+        [Authorize(Roles = "Client")]
+        public ActionResult Create(int linkId = 0)
         {
+            if (linkId != 0)
+            {
+                var linkedTicket = db.Tickets.FirstOrDefault(t => t.Id == linkId);
+                if (linkedTicket != null)
+                {
+                    ViewBag.LinkedTicketId = linkId;
+                    ViewBag.LinkedTicketNote = linkedTicket.Note;                    
+                }
+            }
             return View();
         }
 
@@ -130,9 +139,9 @@ namespace OcecomTickets.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Client")]
-        public ActionResult Create(Ticket ticket)
+        public ActionResult Create(Ticket ticket, int linkId = 0)
         {
-            ticket.CreationDate = DateTime.Now;            
+            ticket.CreationDate = DateTime.Now;
             ticket.Status = "Abierto";
             ticket.ClientId = db.Clients.Where(c => c.Email == User.Identity.Name).Select(c => c.Id).First();
 
@@ -140,12 +149,39 @@ namespace OcecomTickets.Controllers
 
             if (ModelState.IsValid)
             {
+                if (linkId > 0)
+                {
+                    ticket.LinkedTicketId = linkId;
+                }
+
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
+
+
                 return RedirectToAction("Index");
             }
 
             return View(ticket);
+        }
+
+        [Authorize(Roles = "Client")]
+        public ActionResult LinkTicket(int monthsBack = 0)
+        {
+            var clientId = db.Clients.Where(c => c.Email == User.Identity.Name).Select(c => c.Id).First();
+            var closedTicketsQuery = db.Tickets
+                .Where(t => t.ClientId == clientId && t.Status == "Cerrado")
+                .OrderBy(t => t.ClosedDate);
+
+            var startDate = DateTime.Today.AddMonths(1-monthsBack);
+            var nextMonth = startDate.AddMonths(1);
+            var toDate = (new DateTime(nextMonth.Year, nextMonth.Month, 1)).AddDays(-1);
+            var fromDate = new DateTime(toDate.AddMonths(-1).Year, toDate.AddMonths(-1).Month, 1);
+
+            var ticketsToDisplayQuery = closedTicketsQuery.Where(t => t.ClosedDate >= fromDate && t.ClosedDate <= toDate);
+
+            ViewBag.Month1 = fromDate.ToString("MMM");
+            ViewBag.Month2 = toDate.ToString("MMM");
+            return View(ticketsToDisplayQuery.ToList());
         }
 
         [HttpPost]
@@ -169,7 +205,7 @@ namespace OcecomTickets.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles ="Employee")]
+        [Authorize(Roles = "Employee")]
         public ActionResult CaptureHours(int id, int hours, string comment)
         {
             Ticket ticket = db.Tickets.Find(id);

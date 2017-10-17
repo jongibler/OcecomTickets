@@ -1,0 +1,62 @@
+﻿@model List<OcecomTickets.Models.Ticket>
+@{
+    ViewBag.Title = "Ligar Ticket";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Seleccionar Ticket de Reincidencia</h3>
+
+<h4>Mostrando meses: @ViewBag.Month1 - @ViewBag.Month2</h4>
+
+<a>Mostrar Mes Anterior</a> | <a>Mostrar Mes Actual</a>
+
+<hr />
+
+<div class="ticketsTableContainer">
+    @if (Model.Count == 0)
+    {
+        <p>No se tienen tickets cerrados.</p>
+    }
+    else
+    {
+        <div class="table-container">
+            <table class="table table-striped table-hover table-responsive">
+                <tr>
+                    <th>Atendió</th>                    
+                    <th>Fecha Cierre</th>
+                    <th>Severidad</th>
+                    <th>Categoría</th>                   
+                    <th>Nota</th>                    
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr onclick="window.location.href='/Tickets/Create?linkId=@item.Id'">                                              
+                        <td>
+                            @item.LastEmployeeName
+                        </td>                        
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClosedDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FriendlySeverity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        
+                    </tr>
+                }               
+            </table>
+        </div>
+    }
+</div>
+
+
+
+
+
