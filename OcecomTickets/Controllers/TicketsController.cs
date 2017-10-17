@@ -181,6 +181,7 @@ namespace OcecomTickets.Controllers
 
             ViewBag.Month1 = fromDate.ToString("MMM");
             ViewBag.Month2 = toDate.ToString("MMM");
+            ViewBag.MonthsBack = monthsBack + 1;
             return View(ticketsToDisplayQuery.ToList());
         }
 
