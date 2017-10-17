@@ -147,7 +147,7 @@
 
     <div role="tabpanel" class="tab-pane @(ViewBag.CurrentTab == "closed" ? "active" : "")" id="closed">
         <div class="ticketsTableContainer">
-            <h4>Mostrando meses: @ViewBag.MonthFrom - @ViewBag.MonthTo</h4>
+            <h4>Cerrados en: @ViewBag.MonthFrom - @ViewBag.MonthTo</h4>
             <a href="?currentTab=closed&sortBy=@ViewBag.SortBy&monthsBack=@(ViewBag.MonthsBack+1)">Mostrar Mes Anterior</a>
             <span> | </span>
             <a href="?currentTab=closed&sortBy=@ViewBag.SortBy&monthsBack=1">Mostrar Mes Actual</a>

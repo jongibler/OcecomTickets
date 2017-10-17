@@ -22,8 +22,8 @@ namespace OcecomTickets.Controllers
             var validTabs = new string[] { "open", "inprogress", "closed" };
             ViewBag.CurrentTab = validTabs.Contains(currentTab) ? currentTab : "open";
 
-            ViewBag.MonthFrom = DateTime.Today.AddMonths(-monthsBack).ToString("MMM");
-            ViewBag.MonthTo = DateTime.Today.AddMonths(-monthsBack + 1).ToString("MMM");
+            ViewBag.MonthFrom = DateTime.Today.AddMonths(-monthsBack).ToString("MMMM");
+            ViewBag.MonthTo = DateTime.Today.AddMonths(-monthsBack + 1).ToString("MMMM");
             ViewBag.MonthsBack = monthsBack;
 
             ViewBag.SortBy = sortBy;
@@ -179,8 +179,8 @@ namespace OcecomTickets.Controllers
 
             IQueryable<Ticket> ticketsToDisplayQuery = FilterClosedTicketsToDisplay(monthsBack, closedTicketsQuery);
 
-            ViewBag.MonthFrom = DateTime.Today.AddMonths(-monthsBack).ToString("MMM");
-            ViewBag.MonthTo = DateTime.Today.AddMonths(-monthsBack + 1).ToString("MMM");
+            ViewBag.MonthFrom = DateTime.Today.AddMonths(-monthsBack).ToString("MMMM");
+            ViewBag.MonthTo = DateTime.Today.AddMonths(-monthsBack + 1).ToString("MMMM");
             ViewBag.MonthsBack = monthsBack + 1;
 
             return View(ticketsToDisplayQuery.OrderBy(t => t.ClosedDate).ToList());

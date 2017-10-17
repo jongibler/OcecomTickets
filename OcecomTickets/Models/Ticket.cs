@@ -22,7 +22,7 @@ namespace OcecomTickets.Models
         public string Status { get; set; }
 
         [Required]
-        [DisplayFormat(DataFormatString = "{0:dd MMM. h:mm tt}")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM h:mm tt}")]
         public DateTime CreationDate { get; set; }
 
         [Required(ErrorMessage = "Requerido")]        
@@ -39,7 +39,7 @@ namespace OcecomTickets.Models
         [MaxLength(250)]
         public string LastEmployeeName { get; set; }
         
-        [DisplayFormat(DataFormatString = "{0:dd MMM. h:mm tt}")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM h:mm tt}")]
         public DateTime? ClosedDate { get; set; }
 
         [MaxLength(256)]
