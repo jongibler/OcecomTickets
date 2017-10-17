@@ -17,16 +17,29 @@ namespace OcecomTickets.Controllers
         private OcecomTicketsContext db = new OcecomTicketsContext();
 
         // GET: Tickets
-        public ActionResult Index(string sortBy, string currentTab)
+        public ActionResult Index(string sortBy, string currentTab, int backMonths = 0)
         {
             var validTabs = new string[] { "open", "inprogress", "closed" };
             ViewBag.CurrentTab = validTabs.Contains(currentTab) ? currentTab : "open";
 
             var ticketsQuery = db.Tickets.AsQueryable();
             ticketsQuery = FilterForClient(ticketsQuery);
+            ticketsQuery = FilterClosedTickets(ticketsQuery, backMonths);
             ticketsQuery = ApplySorting(sortBy, ticketsQuery);
-
             return View(ticketsQuery.ToList());
+        }
+
+        private static IQueryable<Ticket> FilterClosedTickets(IQueryable<Ticket> ticketsQuery, int backMonths)
+        {
+            backMonths -= 2;
+            var closedMinDate = new DateTime(DateTime.Today.AddMonths(backMonths).Year, DateTime.Today.AddMonths(backMonths).Month, 1);
+            var closedMaxDate = closedMinDate.AddMonths(3);
+
+            ticketsQuery = ticketsQuery
+                .Where(t => new string[] { "Abierto", "En Progreso" }.Contains(t.Status)
+                    || (t.Status == "Cerrado" && t.ClosedDate >= closedMinDate 
+                        && t.ClosedDate < closedMaxDate));
+            return ticketsQuery;
         }
 
         private IQueryable<Ticket> ApplySorting(string sortBy, IQueryable<Ticket> ticketsQuery)
@@ -165,24 +178,31 @@ namespace OcecomTickets.Controllers
         }
 
         [Authorize(Roles = "Client")]
-        public ActionResult LinkTicket(int monthsBack = 0)
+        public ActionResult LinkTicket(int monthsBack = 1)
         {
             var clientId = db.Clients.Where(c => c.Email == User.Identity.Name).Select(c => c.Id).First();
             var closedTicketsQuery = db.Tickets
                 .Where(t => t.ClientId == clientId && t.Status == "Cerrado")
                 .OrderBy(t => t.ClosedDate);
 
-            var startDate = DateTime.Today.AddMonths(1-monthsBack);
-            var nextMonth = startDate.AddMonths(1);
-            var toDate = (new DateTime(nextMonth.Year, nextMonth.Month, 1)).AddDays(-1);
-            var fromDate = new DateTime(toDate.AddMonths(-1).Year, toDate.AddMonths(-1).Month, 1);
+            IQueryable<Ticket> ticketsToDisplayQuery = GetTicketsToDisplay(monthsBack, closedTicketsQuery);
+
+            ViewBag.MonthFrom = DateTime.Today.AddMonths(-monthsBack).ToString("MMM");
+            ViewBag.MonthTo = DateTime.Today.AddMonths(-monthsBack + 1).ToString("MMM");
+            ViewBag.MonthsBack = monthsBack + 1;
+
+            return View(ticketsToDisplayQuery.ToList());
+        }
+
+        private static IQueryable<Ticket> GetTicketsToDisplay(int monthsBack, IOrderedQueryable<Ticket> closedTicketsQuery)
+        {
+            var today = DateTime.Today;
+            var fromDate = new DateTime(today.AddMonths(-monthsBack).Year, today.AddMonths(-monthsBack).Month, 1);
+            var toDate = fromDate.AddMonths(1);
+            toDate = new DateTime(toDate.Year, toDate.Month, DateTime.DaysInMonth(toDate.Year, toDate.Month)).AddDays(1).AddMilliseconds(-1);
 
             var ticketsToDisplayQuery = closedTicketsQuery.Where(t => t.ClosedDate >= fromDate && t.ClosedDate <= toDate);
-
-            ViewBag.Month1 = fromDate.ToString("MMM");
-            ViewBag.Month2 = toDate.ToString("MMM");
-            ViewBag.MonthsBack = monthsBack + 1;
-            return View(ticketsToDisplayQuery.ToList());
+            return ticketsToDisplayQuery;
         }
 
         [HttpPost]
